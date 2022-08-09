@@ -12,28 +12,28 @@
 
 package com.ahmedtikiwa.productsearchsample.network
 
-import com.ahmedtikiwa.productsearchsample.network.model.NetworkProduct
+import com.ahmedtikiwa.productsearchsample.network.model.NetworkProductResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import javax.inject.Inject
 import javax.inject.Singleton
 
 private interface RetrofitCoolBlueNetworkApi {
 
     @GET("search")
-    fun getSearchResultsAsync(
+    suspend fun getSearchResultsAsync(
         @Query("query") name: String,
         @Query("page") page: Int = 1
-    ): List<NetworkProduct>
+    ): NetworkProductResponse
 }
 
 @Singleton
-class RetrofitCoolBlueNetwork : CoolBlueDataSource {
+class RetrofitCoolBlueNetwork @Inject constructor() : CoolBlueDataSource {
 
     private val networkApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -51,7 +51,7 @@ class RetrofitCoolBlueNetwork : CoolBlueDataSource {
         .build()
         .create(RetrofitCoolBlueNetworkApi::class.java)
 
-    override suspend fun getSearchResultsAsync(name: String): List<NetworkProduct> =
+    override suspend fun getSearchResultsAsync(name: String): NetworkProductResponse =
         networkApi.getSearchResultsAsync(name)
 
     companion object {

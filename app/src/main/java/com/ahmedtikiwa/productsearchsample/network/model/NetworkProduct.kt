@@ -2,6 +2,10 @@ package com.ahmedtikiwa.productsearchsample.network.model
 
 import com.ahmedtikiwa.productsearchsample.domain.model.Product
 
+data class NetworkProductResponse(
+    val products: List<NetworkProduct>
+)
+
 data class NetworkProduct(
     val USPs: List<String>?,
     val availabilityState: Int?,

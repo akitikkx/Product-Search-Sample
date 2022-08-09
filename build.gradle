@@ -4,6 +4,7 @@ buildscript {
 
         compose_activity_version = '1.5.1'
         compose_destinations_version = "1.6.15-beta"
+        compose_hilt_navigation_version = "1.0.0"
         compose_material_version = '1.0.0-alpha15'
         compose_version = '1.2.0'
 

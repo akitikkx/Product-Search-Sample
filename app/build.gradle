@@ -53,6 +53,9 @@ android {
             }
         }
     }
+    ksp {
+        arg("compose-destinations.generateNavGraphs", "true")
+    }
 }
 
 dependencies {
@@ -67,6 +70,8 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    // Hilt Navigation
+    implementation "androidx.hilt:hilt-navigation-compose:$compose_hilt_navigation_version"
 
     // Coroutines for getting off the UI thread
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"

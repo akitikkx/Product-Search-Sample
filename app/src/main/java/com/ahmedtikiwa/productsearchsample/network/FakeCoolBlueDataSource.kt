@@ -1,9 +1,6 @@
 package com.ahmedtikiwa.productsearchsample.network
 
-import com.ahmedtikiwa.productsearchsample.network.model.NetworkProduct
-import com.ahmedtikiwa.productsearchsample.network.model.NetworkPromoIcon
-import com.ahmedtikiwa.productsearchsample.network.model.NetworkReviewInformation
-import com.ahmedtikiwa.productsearchsample.network.model.NetworkReviewSummary
+import com.ahmedtikiwa.productsearchsample.network.model.*
 
 class FakeCoolBlueDataSource: CoolBlueDataSource {
 
@@ -84,7 +81,7 @@ class FakeCoolBlueDataSource: CoolBlueDataSource {
         ),
     )
 
-    override suspend fun getSearchResultsAsync(name: String): List<NetworkProduct> {
-        return productsList
+    override suspend fun getSearchResultsAsync(name: String): NetworkProductResponse {
+        return NetworkProductResponse(products = productsList)
     }
 }

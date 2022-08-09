@@ -12,10 +12,10 @@
 
 package com.ahmedtikiwa.productsearchsample.network
 
-import com.ahmedtikiwa.productsearchsample.network.model.NetworkProduct
+import com.ahmedtikiwa.productsearchsample.network.model.NetworkProductResponse
 import retrofit2.http.Query
 
 interface CoolBlueDataSource {
 
-    suspend fun getSearchResultsAsync(@Query("q") name: String): List<NetworkProduct>
+    suspend fun getSearchResultsAsync(@Query("q") name: String): NetworkProductResponse
 }
