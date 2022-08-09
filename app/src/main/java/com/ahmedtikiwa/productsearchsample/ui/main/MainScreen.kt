@@ -22,7 +22,10 @@ fun MainScreen() {
         navHostController = navController,
         topAppBar = { TopBar() })
     {
-        AppNavigation(navHostController = navController)
+        AppNavigation(
+            navHostController = navController,
+            contentPadding = it
+        )
     }
 }
 
