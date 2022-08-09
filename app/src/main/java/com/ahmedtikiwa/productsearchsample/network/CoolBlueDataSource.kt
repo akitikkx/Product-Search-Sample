@@ -13,10 +13,9 @@
 package com.ahmedtikiwa.productsearchsample.network
 
 import com.ahmedtikiwa.productsearchsample.network.model.NetworkProduct
-import kotlinx.coroutines.Deferred
 import retrofit2.http.Query
 
 interface CoolBlueDataSource {
 
-    suspend fun getSearchResultsAsync(@Query("q") name: String): Deferred<List<NetworkProduct>>
+    suspend fun getSearchResultsAsync(@Query("q") name: String): List<NetworkProduct>
 }

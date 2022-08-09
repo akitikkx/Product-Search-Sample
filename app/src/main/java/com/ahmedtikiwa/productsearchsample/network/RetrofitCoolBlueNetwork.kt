@@ -29,7 +29,7 @@ private interface RetrofitCoolBlueNetworkApi {
     fun getSearchResultsAsync(
         @Query("query") name: String,
         @Query("page") page: Int = 1
-    ): Deferred<List<NetworkProduct>>
+    ): List<NetworkProduct>
 }
 
 @Singleton
@@ -51,7 +51,7 @@ class RetrofitCoolBlueNetwork : CoolBlueDataSource {
         .build()
         .create(RetrofitCoolBlueNetworkApi::class.java)
 
-    override suspend fun getSearchResultsAsync(name: String): Deferred<List<NetworkProduct>> =
+    override suspend fun getSearchResultsAsync(name: String): List<NetworkProduct> =
         networkApi.getSearchResultsAsync(name)
 
     companion object {

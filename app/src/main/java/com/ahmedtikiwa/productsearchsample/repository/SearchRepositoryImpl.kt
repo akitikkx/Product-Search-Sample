@@ -16,7 +16,7 @@ class SearchRepositoryImpl(
     override suspend fun getSearchResults(name: String): Flow<List<Product>> {
         return flow {
             val response = withContext(Dispatchers.IO) {
-                coolBlueDataSource.getSearchResultsAsync(name).await().asDomainModel()
+                coolBlueDataSource.getSearchResultsAsync(name).asDomainModel()
             }
             emit(response)
         }.flowOn(Dispatchers.IO)
