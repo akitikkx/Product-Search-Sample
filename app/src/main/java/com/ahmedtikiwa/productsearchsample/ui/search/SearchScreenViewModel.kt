@@ -27,7 +27,12 @@ class SearchScreenViewModel @Inject constructor(
         getProducts(query)
     }
 
-    private fun getProducts(query: String) {
+    private fun getProducts(query: String?) {
+        if (query.isNullOrEmpty()) {
+            _searchResults.value = SearchUiState.Default
+            return
+        }
+
         viewModelScope.launch {
             _searchResults.value = SearchUiState.Loading
 
