@@ -1,20 +1,24 @@
 package com.ahmedtikiwa.productsearchsample.ui.search
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ahmedtikiwa.productsearchsample.R
 import com.ahmedtikiwa.productsearchsample.domain.model.Product
+import com.ahmedtikiwa.productsearchsample.ui.components.SearchImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 
@@ -46,16 +50,25 @@ fun SearchArea(
 ) {
     Column(modifier = Modifier.padding(8.dp)) {
         SearchForm(onSearch = { onTextSubmit(it) })
-    }
 
-    when (searchUiState) {
-        is SearchUiState.Loading -> {
-
+        when (searchUiState) {
+            is SearchUiState.Loading -> {
+                Column {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth()
+                    )
+                }
+            }
+            is SearchUiState.Success -> {
+                SearchResultsList(
+                    list = searchUiState.products,
+                    onClick = {}
+                )
+            }
+            else -> {}
         }
-        is SearchUiState.Success -> {
-            SearchResultsList(list = searchUiState.products, onClick = {})
-        }
-        is SearchUiState.Default -> {}
     }
 }
 
@@ -101,10 +114,57 @@ fun SearchResultsList(
 ) {
     LazyColumn {
         items(list) { item ->
-            if (!item.productName.isNullOrEmpty()) {
-                Text(text = item.productName)
+            ProductListItem(item = item) {
+                onClick(it)
             }
         }
     }
+}
 
+@Composable
+fun ProductListItem(
+    item: Product,
+    onClick: (item: Product) -> Unit
+) {
+    Card(
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable { onClick(item) }
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            item.productImage?.let { productImage ->
+                SearchImage(
+                    url = productImage, modifier = Modifier
+                        .width(dimensionResource(id = R.dimen.compose_search_list_image_width))
+                )
+            }
+
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier.padding(4.dp)
+            )
+            {
+                item.productName?.let { productName ->
+                    Text(
+                        text = productName,
+                        modifier = Modifier.padding(4.dp),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.Blue,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                item.salesPriceIncVat?.let { salesPrice ->
+                    Text(
+                        text = salesPrice.toString(),
+                        modifier = Modifier.padding(4.dp),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+    }
 }
