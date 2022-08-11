@@ -6,6 +6,9 @@ are retrieved as the user types and cleared when the user clears the search fiel
 These results are a product list which are clickable and on click navigates the user to the detail
 screen for the selected product.
 
+<img src="https://user-images.githubusercontent.com/2282990/184181055-dfe6b76f-740d-4e84-ad79-766ab864ac75.gif" width="246"/>
+
+
 ### Code and directory structure
 ```
 [main]
