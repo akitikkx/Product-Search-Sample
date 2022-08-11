@@ -6,7 +6,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.ahmedtikiwa.productsearchsample.MainActivity
-import com.ahmedtikiwa.productsearchsample.util.Constants
+import com.ahmedtikiwa.productsearchsample.util.Constants.TEST_TAG_SEARCH_FORM
+import com.ahmedtikiwa.productsearchsample.util.Constants.TEST_TAG_SEARCH_RESULTS
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -31,7 +32,12 @@ class SearchScreenTest {
 
     @Test
     fun input_form_is_visible() {
-        composeRule.onNodeWithTag(Constants.TEST_TAG_SEARCH_FORM).assertIsDisplayed()
+        composeRule.onNodeWithTag(TEST_TAG_SEARCH_FORM).assertIsDisplayed()
+    }
+
+    @Test
+    fun search_results_are_not_displayed_on_screen_load() {
+        composeRule.onNodeWithTag(TEST_TAG_SEARCH_RESULTS).assertDoesNotExist()
     }
 
 }

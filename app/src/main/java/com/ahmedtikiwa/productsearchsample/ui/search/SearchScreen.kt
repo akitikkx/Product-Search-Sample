@@ -23,6 +23,7 @@ import com.ahmedtikiwa.productsearchsample.domain.model.asProductScreenArg
 import com.ahmedtikiwa.productsearchsample.ui.components.SearchImage
 import com.ahmedtikiwa.productsearchsample.ui.destinations.ProductDetailScreenDestination
 import com.ahmedtikiwa.productsearchsample.util.Constants.TEST_TAG_SEARCH_FORM
+import com.ahmedtikiwa.productsearchsample.util.Constants.TEST_TAG_SEARCH_RESULTS
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -130,7 +131,9 @@ fun SearchResultsList(
     list: List<Product>,
     onClick: (item: Product) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.testTag(TEST_TAG_SEARCH_RESULTS)
+    ) {
         items(list) { item ->
             ProductListItem(item = item) {
                 onClick(it)
