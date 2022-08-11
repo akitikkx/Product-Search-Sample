@@ -1,13 +1,24 @@
 # Project Search Sample
 
-This is a simple MVVM Android app that displays a search field where the user can type
-any search term and the same results are returned from a test API endpoint. The results 
-are retrieved as the user types and cleared when the user clears the search field. 
-These results are a product list which are clickable and on click navigates the user to the detail
-screen for the selected product.
+This is a simple MVVM Android app built in Kotlin that displays a search field where the user can type
+any search term and the same results are returned from a test API endpoint - in other words the same
+query parameters are always sent. The results are retrieved as the user types and cleared when the 
+user clears the search field. These results are a list of products displayed below the search field to the user
+which are clickable and on click navigates the user to the detail screen for the selected product.
 
 <img src="https://user-images.githubusercontent.com/2282990/184181055-dfe6b76f-740d-4e84-ad79-766ab864ac75.gif" width="246"/>
 
+## Architecture
+This project is built in Kotlin and uses the following libraries:
+
+- Jetpack Compose
+- ViewModel, State and Kotlin Flow
+- Rafael Costa's `Compose Destinations` library for navigation
+- Hilt
+- Compose Coil
+- Compose Material 3
+- Retrofit
+- OkHttp
 
 ### Code and directory structure
 ```
@@ -58,6 +69,44 @@ androidTest
 HiltTestRunner
 
 ```
+
+## The different directories
+
+### di
+This is the dependency injection package where Hilt modules are defined. This project
+has three modules `AppModule`, `NetworkModule` and `RepositoryModule`
+
+### domain
+This package contains two subpackages - `model` and `useCases`. `model` is used to house
+the app specific models modelled against the network models found in `network.model`.
+
+The `useCases` contains `GetProductUseCase` whose role is to communicate to the repository
+on behalf of the viewModel and retrieve the data to be displayed. `ProductUseCase` is a data
+model to contain all the different use cases for the products.
+
+### network
+This package contains a subpackage `model` and Retrofit service definitions for 
+connecting to the API. Hilt then provides these through the `di.NetworkModule` module.
+The `model` package contains data classes modelled against the API's JSON response body.
+
+### repository
+This package contains the interface `SearchRepository` and its implementation class
+`SearchRepositoryImpl`. `SearchRepositoryImpl` requires a data source which is provided via dependency
+injection, and retrieves the data from the API and returns this as `Flow`.
+
+### ui
+The is where all the UI Compose code is. The `main` package contains the `MainScreen` composable
+setup by `MainActivity` as the compose navigation host.
+
+Using Rafael Costa's `Compose Destinations` library, the navigation graph is easily created
+using annotated composables. `ui.search.SearchScreen` and `ui.productdetail.ProductDetailScreen`
+are both annotated with `@Destination` and added at to the generated navigation graph. 
+
+The `navigation` package contains the navigation host where the `Compose Destinations`'s 
+`DestinationsNavHost` is used to set the navigation graph up.
+
+The `search` and `productdetail` packages represent the only two screens displayed to the 
+user, each with its own viewModel.
 
 ## Unit tests
 The project contains tests for:
