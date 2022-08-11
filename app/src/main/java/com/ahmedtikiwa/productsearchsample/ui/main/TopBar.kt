@@ -12,17 +12,55 @@
 
 package com.ahmedtikiwa.productsearchsample.ui.main
 
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavBackStackEntry
 import com.ahmedtikiwa.productsearchsample.R
+import com.ahmedtikiwa.productsearchsample.ui.destinations.ProductDetailScreenDestination
 
 @ExperimentalMaterial3Api
 @Composable
-fun TopBar() {
-    CenterAlignedTopAppBar(
-        title = { Text(text = stringResource(id = R.string.app_name)) }
+fun TopBar(
+    navBackStackEntry: NavBackStackEntry?,
+    onArrowClick: () -> Unit
+) {
+    val appBarIconState = rememberSaveable { mutableStateOf(true) }
+
+    appBarIconState.value = isChildScreen(navBackStackEntry = navBackStackEntry)
+
+    SmallTopAppBar(
+        title = { Text(text = stringResource(id = R.string.app_name)) },
+        navigationIcon = {
+            NavigationIcon(appBarIconState = appBarIconState) {
+                onArrowClick()
+            }
+        }
     )
+}
+
+@Composable
+fun NavigationIcon(
+    appBarIconState: State<Boolean>,
+    onArrowClick: () -> Unit
+) {
+    AnimatedVisibility(visible = appBarIconState.value) {
+        IconButton(onClick = { onArrowClick() }) {
+            Icon(Icons.Filled.ArrowBack, contentDescription = "Back arrow")
+        }
+    }
+}
+
+@ExperimentalMaterial3Api
+fun isChildScreen(navBackStackEntry: NavBackStackEntry?): Boolean {
+    return when (navBackStackEntry?.destination?.route) {
+        ProductDetailScreenDestination.route -> true
+        else -> false
+    }
 }

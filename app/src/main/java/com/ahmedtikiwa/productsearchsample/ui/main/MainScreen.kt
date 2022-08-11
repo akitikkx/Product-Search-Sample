@@ -20,7 +20,14 @@ fun MainScreen() {
 
     MainScaffold(
         navHostController = navController,
-        topAppBar = { TopBar() })
+        topAppBar = { navBackStackEntry ->
+            TopBar(
+                navBackStackEntry = navBackStackEntry
+            ) {
+                navController.navigateUp()
+            }
+        }
+    )
     {
         AppNavigation(
             navHostController = navController,
