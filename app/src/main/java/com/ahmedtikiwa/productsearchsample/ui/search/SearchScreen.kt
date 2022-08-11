@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,6 +22,7 @@ import com.ahmedtikiwa.productsearchsample.domain.model.Product
 import com.ahmedtikiwa.productsearchsample.domain.model.asProductScreenArg
 import com.ahmedtikiwa.productsearchsample.ui.components.SearchImage
 import com.ahmedtikiwa.productsearchsample.ui.destinations.ProductDetailScreenDestination
+import com.ahmedtikiwa.productsearchsample.util.Constants.TEST_TAG_SEARCH_FORM
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -119,6 +121,7 @@ fun SearchInputField(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
+            .testTag(TEST_TAG_SEARCH_FORM)
     )
 }
 
