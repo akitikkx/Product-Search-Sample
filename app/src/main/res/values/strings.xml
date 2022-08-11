@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Product Search Sample</string>
+    <string name="next_day_delivery">"Delivered tomorrow"</string>
 </resources>

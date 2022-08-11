@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="compose_search_list_image_width">100dp</dimen>
-    <dimen name="compose_search_list_image_height">150dp</dimen>
+    <dimen name="search_list_image_width">100dp</dimen>
+    <dimen name="search_list_image_height">150dp</dimen>
+    <dimen name="product_detail_backdrop_height">250dp</dimen>
 </resources>

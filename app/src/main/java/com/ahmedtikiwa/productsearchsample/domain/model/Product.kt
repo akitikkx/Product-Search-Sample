@@ -14,3 +14,15 @@ data class Product(
     val reviewInformation: ReviewInformation?,
     val salesPriceIncVat: Double?
 )
+
+fun Product.asProductScreenArg(): ProductScreenArgs {
+    return ProductScreenArgs(
+        productName = productName,
+        productImage = productImage,
+        productId = productId,
+        nextDayDelivery = nextDayDelivery,
+        salesPriceIncVat = salesPriceIncVat,
+        coolbluesChoiceInformationTitle = coolbluesChoiceInformationTitle,
+        availabilityState = availabilityState
+    )
+}

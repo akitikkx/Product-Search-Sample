@@ -18,25 +18,37 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ahmedtikiwa.productsearchsample.R
 import com.ahmedtikiwa.productsearchsample.domain.model.Product
+import com.ahmedtikiwa.productsearchsample.domain.model.asProductScreenArg
 import com.ahmedtikiwa.productsearchsample.ui.components.SearchImage
+import com.ahmedtikiwa.productsearchsample.ui.destinations.ProductDetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @ExperimentalMaterial3Api
 @RootNavGraph(start = true)
 @Destination
 @Composable
 fun SearchScreen(
-    viewModel: SearchScreenViewModel = hiltViewModel()
+    viewModel: SearchScreenViewModel = hiltViewModel(),
+    navigator: DestinationsNavigator
 ) {
     val searchScreenState = viewModel.searchResults.value
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(8.dp)) {
             Box(modifier = Modifier.fillMaxSize()) {
-                SearchArea(searchScreenState) {
-                    viewModel.onSearchQueryProvided(it)
-                }
+                SearchArea(
+                    searchUiState = searchScreenState,
+                    onTextSubmit = {
+                        viewModel.onSearchQueryProvided(it)
+                    },
+                    onItemClick = {
+                        navigator.navigate(ProductDetailScreenDestination(
+                            it.asProductScreenArg()
+                        ))
+                    }
+                )
             }
         }
     }
@@ -46,7 +58,8 @@ fun SearchScreen(
 @Composable
 fun SearchArea(
     searchUiState: SearchUiState,
-    onTextSubmit: (String) -> Unit
+    onTextSubmit: (String) -> Unit,
+    onItemClick: (Product) -> Unit
 ) {
     Column(modifier = Modifier.padding(8.dp)) {
         SearchForm(onSearch = { onTextSubmit(it) })
@@ -64,7 +77,9 @@ fun SearchArea(
             is SearchUiState.Success -> {
                 SearchResultsList(
                     list = searchUiState.products,
-                    onClick = {}
+                    onClick = {
+                        onItemClick(it)
+                    }
                 )
             }
             else -> {}
@@ -137,7 +152,7 @@ fun ProductListItem(
             item.productImage?.let { productImage ->
                 SearchImage(
                     url = productImage, modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.compose_search_list_image_width))
+                        .width(dimensionResource(id = R.dimen.search_list_image_width))
                 )
             }
 

@@ -36,7 +36,8 @@ import com.ahmedtikiwa.productsearchsample.R
 fun SearchImage(
     url: String,
     modifier: Modifier = Modifier,
-    height: Dp = dimensionResource(id = R.dimen.compose_search_list_image_height),
+    height: Dp = dimensionResource(id = R.dimen.search_list_image_height),
+    contentScale: ContentScale = ContentScale.Crop
 ) {
     Image(
         painter = rememberImagePainter(
@@ -44,7 +45,7 @@ fun SearchImage(
             builder = {
                 crossfade(true)
             }),
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
         contentDescription = null,
         modifier = modifier
             .fillMaxWidth()
